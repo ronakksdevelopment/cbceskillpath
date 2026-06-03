@@ -228,6 +228,7 @@
             color: var(--navy);
             align-self: flex-start;
             margin-left: auto;
+            transition: var(--transition);
         }
         .btn {
             padding: 12px 20px;
@@ -626,6 +627,10 @@
                 card.className = `task-card ${isCompleted ? 'completed' : ''}`;
                 card.dataset.id = task.id;
                 
+                // If completed, swap original brand icon to checkmark circle
+                const activeIconClass = isCompleted ? 'fa-solid fa-circle-check' : task.icon;
+                const activeIconColor = isCompleted ? 'var(--success)' : task.color;
+
                 card.innerHTML = `
                     <div class="card-header">
                         <div class="step-number">${index + 1}</div>
@@ -633,7 +638,7 @@
                             <h3>${task.title}</h3>
                             <p>${task.desc}</p>
                         </div>
-                        <i class="${task.icon} task-icon" style="color: ${isCompleted ? 'var(--success)' : task.color}"></i>
+                        <i class="${activeIconClass} task-icon" style="color: ${activeIconColor}"></i>
                     </div>
                     <button class="btn ${isCompleted ? '' : 'btn-primary'}" onclick="handleTaskAction('${task.id}', '${task.url}', this)" ${isCompleted ? 'disabled' : ''}>
                         ${isCompleted ? '✅ Completed' : 'Go & Complete <i class="fa-solid fa-arrow-right"></i>'}
@@ -715,8 +720,12 @@
                     btn.disabled = true;
                 }
                 
+                // Swap task card icon directly to checkmark circle upon dynamic completion
                 const icon = cardElement.querySelector('.task-icon');
-                if(icon) icon.style.color = 'var(--success)';
+                if(icon) {
+                    icon.className = 'fa-solid fa-circle-check task-icon';
+                    icon.style.color = 'var(--success)';
+                }
 
                 generateConfetti(cardElement, 15);
             }
@@ -761,6 +770,7 @@
             showToast(SUCCESS_MESSAGES[idx]);
         }
 
+        // Toast Messages
         function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
