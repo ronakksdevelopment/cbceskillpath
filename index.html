@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBCE Skill Development | Task Unlock Portal</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- LordIcon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+    <style>
+        :root {
+            /* Branding Colors */
+            --saffron: #FF9933;
+            --navy: #0A1F5C;
+            --green: #138808;
+            --white: #FFFFFF;
+            --cream: #FAFAF8;
+            --gold: #FFD700;
+            --dark-gray: #333333;
+            --light-gray: #E5E7EB;
+            --success: #10B981;
+            
+            /* Typography */
+            --font-brand: 'Baloo 2', cursive;
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* UI Elements */
+            --shadow-sm: 0 2px 8px rgba(10, 31, 92, 0.08);
+            --shadow-md: 0 8px 24px rgba(10, 31, 92, 0.12);
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Base & Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cream);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 80px; /* Space for progress bar */
+        }
+
+        /* Tricolor Utility */
+        .tricolor-border-top {
+            background: linear-gradient(to right, var(--saffron) 33.33%, var(--white) 33.33%, var(--white) 66.66%, var(--green) 66.66%);
+            height: 3px;
+            width: 100%;
+        }
+        .tricolor-text {
+            background: linear-gradient(to right, var(--saffron), var(--navy), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Background Watermark */
+        #watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            max-width: 600px;
+            opacity: 0.04;
+            z-index: -1;
+            pointer-events: none;
+            animation: spinChakra 30s linear infinite;
+        }
+        @keyframes spinChakra { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+        .brand-text h1 {
+            font-family: var(--font-brand);
+            font-size: 1.5rem;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--saffron);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .location-pill {
+            background: var(--light-gray);
+            color: var(--navy);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            margin: 15px 0 10px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--saffron), var(--navy), var(--green));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Task Grid */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 768px) { .task-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .task-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        /* Task Card */
+        .task-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid var(--saffron);
+        }
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .task-card.completed {
+            border-left-color: var(--success);
+            background: #F8FAFC;
+        }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .step-number {
+            background: var(--light-gray);
+            color: var(--navy);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .task-card.completed .step-number {
+            background: var(--success);
+            color: var(--white);
+        }
+        .card-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .card-content p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .task-icon {
+            font-size: 2rem;
+            color: var(--navy);
+            align-self: flex-start;
+            margin-left: auto;
+        }
+        .btn {
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            border: none;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+        }
+        .btn-primary {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: #061236;
+            box-shadow: 0 4px 12px rgba(10, 31, 92, 0.3);
+        }
+        .task-card.completed .btn-primary {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes pulseSuccess {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .pulse-animation { animation: pulseSuccess 0.6s ease-out; }
+
+        /* Confetti */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            top: -10px;
+            opacity: 0;
+            border-radius: 50%;
+        }
+        @keyframes dropConfetti {
+            0% { transform: translateY(0) rotate(0); opacity: 1; }
+            100% { transform: translateY(150px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--navy);
+            color: var(--white);
+            padding: 15px 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+        }
+        .progress-text {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .progress-track {
+            flex-grow: 1;
+            height: 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--saffron), var(--gold), var(--green));
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+        footer h3 {
+            font-family: var(--font-brand);
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: var(--saffron);
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer-links a:hover { text-decoration: underline; }
+
+        /* Modals & Toasts */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 31, 92, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: var(--transition);
+            position: relative;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-content h2 { font-family: var(--font-heading); color: var(--navy); margin: 20px 0 10px; }
+        .modal-content p { color: #555; margin-bottom: 25px; }
+
+        .toast-container {
+            position: fixed;
+            bottom: 80px; /* Above progress bar */
+            right: 20px;
+            z-index: 1100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: var(--white);
+            border-left: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--navy);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast.show { transform: translateX(0); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Rotating Watermark -->
+    <svg id="watermark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="none" stroke="var(--navy)" stroke-width="2"/>
+        <circle cx="50" cy="50" r="40" fill="none" stroke="var(--navy)" stroke-width="0.5"/>
+        <g stroke="var(--navy)" stroke-width="1.5">
+            <line x1="50" y1="50" x2="50" y2="2"/><line x1="50" y1="50" x2="50" y2="98"/>
+            <line x1="50" y1="50" x2="2" y2="50"/><line x1="50" y1="50" x2="98" y2="50"/>
+            <line x1="50" y1="50" x2="16.05" y2="16.05"/><line x1="50" y1="50" x2="83.95" y2="83.95"/>
+            <line x1="50" y1="50" x2="16.05" y2="83.95"/><line x1="50" y1="50" x2="83.95" y2="16.05"/>
+            <line x1="50" y1="50" x2="25.98" y2="8.36"/><line x1="50" y1="50" x2="74.02" y2="91.64"/>
+            <line x1="50" y1="50" x2="8.36" y2="25.98"/><line x1="50" y1="50" x2="91.64" y2="74.02"/>
+            <line x1="50" y1="50" x2="8.36" y2="74.02"/><line x1="50" y1="50" x2="91.64" y2="25.98"/>
+            <line x1="50" y1="50" x2="25.98" y2="91.64"/><line x1="50" y1="50" x2="74.02" y2="8.36"/>
+            <line x1="50" y1="50" x2="37.5" y2="3.41"/><line x1="50" y1="50" x2="62.5" y2="96.59"/>
+            <line x1="50" y1="50" x2="3.41" y2="37.5"/><line x1="50" y1="50" x2="96.59" y2="62.5"/>
+            <line x1="50" y1="50" x2="3.41" y2="62.5"/><line x1="50" y1="50" x2="96.59" y2="37.5"/>
+            <line x1="50" y1="50" x2="37.5" y2="96.59"/><line x1="50" y1="50" x2="62.5" y2="3.41"/>
+        </g>
+        <circle cx="50" cy="50" r="8" fill="var(--navy)"/>
+    </svg>
+
+    <!-- Header -->
+    <header>
+        <div class="tricolor-border-top"></div>
+        <div class="header-content">
+            <div class="brand">
+                <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="2000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:40px;height:40px"></lord-icon>
+                <div class="brand-text">
+                    <h1>CBCE</h1>
+                    <p>Skill Development</p>
+                </div>
+            </div>
+            <div class="location-pill">
+                <i class="fa-solid fa-location-dot" style="color: var(--saffron);"></i> Kumarghat
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Public View -->
+    <main>
+        <section class="hero">
+            <lord-icon src="https://cdn.lordicon.com/gqzfzudq.json" trigger="loop" delay="1500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:80px;height:80px"></lord-icon>
+            <h1 class="tricolor-text">Task Unlock Portal</h1>
+            <p>Complete all tasks below to unlock your exclusive resources and certificate.</p>
+            <div class="divider"></div>
+        </section>
+
+        <section class="main-container">
+            <div class="task-grid" id="task-grid">
+                <!-- Tasks injected via JS -->
+            </div>
+        </section>
+
+        <footer>
+            <div class="tricolor-border-top"></div>
+            <div style="padding-top: 30px;">
+                <h3>CBCE Skill Development</h3>
+                <p>Connect · Learn · Grow</p>
+                <div class="footer-links">
+                    <a href="https://linktr.ee/cbceindia" target="_blank"><i class="fa-solid fa-link"></i> Linktree</a>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.8rem; color: #999;">📍 Kumarghat, Tripura, India</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-text"><span id="completed-count">0</span> of <span id="total-count">0</span> Tasks</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="welcome-modal">
+        <div class="modal-content">
+            <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" delay="500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:100px;height:100px"></lord-icon>
+            <h2>Welcome to CBCE Portal!</h2>
+            <p>Ready to unlock your potential? Complete the tasks in your dashboard to proceed.</p>
+            <button class="btn btn-primary" onclick="closeModal('welcome-modal')">Let's Begin <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="completion-modal">
+        <div class="modal-content">
+            <div id="full-confetti" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
+            <lord-icon src="https://cdn.lordicon.com/jxwksmpo.json" trigger="loop" colors="primary:#ffd700,secondary:#138808" style="width:120px;height:120px"></lord-icon>
+            <h2>Congratulations!</h2>
+            <p>You have successfully completed all tasks.</p>
+            <button class="btn btn-primary" onclick="shareSuccess()">Share Your Success <i class="fa-solid fa-share-nodes"></i></button>
+            <button class="btn" style="background: var(--light-gray); color: var(--navy); margin-top:10px;" onclick="closeModal('completion-modal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Logic -->
+    <script>
+        // ==========================================
+        // 🛠️ DEVELOPER GUIDE: HOW TO EDIT TASKS 
+        // ==========================================
+        // To add, edit, or remove tasks, simply modify the 'TASKS' array below.
+        // 
+        // PROPERTIES:
+        // - id: A unique string identifier for the task (e.g., 't1', 't2').
+        // - title: The main heading of the task card.
+        // - desc: A short description explaining what the user needs to do.
+        // - url: The link to open. (Note: use 'share' to trigger the device's native share menu).
+        // - icon: FontAwesome classes for the icon (Find icons at fontawesome.com).
+        // - color: Hex color code for the icon.
+        // ==========================================
+        const TASKS = [
+            { 
+                id: 't1', 
+                title: 'Google Review Kumarghat', 
+                desc: 'Rate and review us on Google to support our branch.', 
+                url: 'https://g.page/r/CRTzruHtUZkTEAE/review', 
+                icon: 'fa-brands fa-google', 
+                color: '#EA4335' 
+            },
+            { 
+                id: 't2', 
+                title: 'Facebook Kumarghat Account', 
+                desc: 'Connect with our local Kumarghat Facebook account.', 
+                url: 'https://www.facebook.com/share/1MzwkXdVon/', 
+                icon: 'fa-brands fa-facebook', 
+                color: '#1877F2' 
+            },
+            { 
+                id: 't3', 
+                title: 'Facebook Kumarghat Page', 
+                desc: 'Like and follow our official local Facebook page.', 
+                url: 'https://www.facebook.com/share/1FtqaiDqQr/', 
+                icon: 'fa-solid fa-thumbs-up', 
+                color: '#1877F2' 
+            },
+            { 
+                id: 't4', 
+                title: 'Facebook CBCE India', 
+                desc: 'Follow the main CBCE India Facebook page.', 
+                url: 'https://www.facebook.com/share/15oC2Qw6ne/', 
+                icon: 'fa-brands fa-facebook', 
+                color: '#1877F2' 
+            },
+            { 
+                id: 't5', 
+                title: 'Instagram CBCE India', 
+                desc: 'Follow our official Instagram for latest updates.', 
+                url: 'https://www.instagram.com/cbceindia?igsh=MTdzNnNmaWsxd3EwZQ==', 
+                icon: 'fa-brands fa-instagram', 
+                color: '#E1306C' 
+            },
+            { 
+                id: 't6', 
+                title: 'CBCE Kumarghat WhatsApp Group', 
+                desc: 'Join our WhatsApp group for instant notifications.', 
+                url: 'https://chat.whatsapp.com/DFnzb9CjjNb5fMUDJ4NpOf', 
+                icon: 'fa-brands fa-whatsapp', 
+                color: '#25D366' 
+            },
+            { 
+                id: 't7', 
+                title: 'CBCE Kumarghat Justdial Review', 
+                desc: 'Leave us a positive review on Justdial.', 
+                url: 'https://jsdl.in/DT-99EY2MYYU2A', 
+                icon: 'fa-solid fa-star', 
+                color: '#F36B21' 
+            },
+            { 
+                id: 't8', 
+                title: 'Share This Portal', 
+                desc: 'Share this page with your friends and network.', 
+                url: 'share', 
+                icon: 'fa-solid fa-share-nodes', 
+                color: '#FF9933' 
+            }
+        ];
+
+        // ==========================================
+        // ⚙️ APP LOGIC (Do not edit below unless changing functionality)
+        // ==========================================
+        const SUCCESS_MESSAGES = [
+            "🔥 Crushing it!", "🚀 Liftoff!", "⭐ Outstanding!", "🎉 Boom! Done.", 
+            "💪 Keep going!", "🎯 Spot on!", "🌟 Brilliant!", "✅ Task Nailed!"
+        ];
+
+        // Session State (Memory only, resets on refresh)
+        let completedTasks = [];
+        let pendingTask = null;
+        let lastToastIndex = -1;
+        let welcomeShown = false;
+        let allCompleteShown = false;
+
+        // Initialize App
+        function init() {
+            renderTasks();
+            updateProgress();
+
+            if (!welcomeShown) {
+                setTimeout(() => {
+                    openModal('welcome-modal');
+                    welcomeShown = true;
+                }, 800);
+            }
+        }
+
+        // Render Cards
+        function renderTasks() {
+            const grid = document.getElementById('task-grid');
+            grid.innerHTML = '';
+            
+            TASKS.forEach((task, index) => {
+                const isCompleted = completedTasks.includes(task.id);
+                const card = document.createElement('div');
+                
+                card.className = `task-card ${isCompleted ? 'completed' : ''}`;
+                card.dataset.id = task.id;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="step-number">${index + 1}</div>
+                        <div class="card-content">
+                            <h3>${task.title}</h3>
+                            <p>${task.desc}</p>
+                        </div>
+                        <i class="${task.icon} task-icon" style="color: ${isCompleted ? 'var(--success)' : task.color}"></i>
+                    </div>
+                    <button class="btn ${isCompleted ? '' : 'btn-primary'}" onclick="handleTaskAction('${task.id}', '${task.url}', this)" ${isCompleted ? 'disabled' : ''}>
+                        ${isCompleted ? '✅ Completed' : 'Go & Complete <i class="fa-solid fa-arrow-right"></i>'}
+                    </button>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Update Progress Bar
+        function updateProgress() {
+            const total = TASKS.length;
+            const completedCount = completedTasks.length;
+
+            document.getElementById('completed-count').innerText = completedCount;
+            document.getElementById('total-count').innerText = total;
+
+            const percentage = total === 0 ? 0 : (completedCount / total) * 100;
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+
+            if (percentage === 100 && total > 0 && !allCompleteShown) {
+                setTimeout(() => {
+                    openModal('completion-modal');
+                    generateConfetti(document.getElementById('full-confetti'), 50);
+                    allCompleteShown = true;
+                }, 1000);
+            }
+        }
+
+        // Task Action Logic
+        function handleTaskAction(taskId, url, btnElement) {
+            if (url === 'share') {
+                triggerShare();
+                completeTask(taskId, btnElement.closest('.task-card'));
+                return;
+            }
+
+            // Log pending state and redirect
+            pendingTask = { id: taskId, element: btnElement.closest('.task-card') };
+            window.open(url, '_blank');
+        }
+
+        // Listen for user returning to tab
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && pendingTask) {
+                simulateReturn();
+            }
+        });
+        window.addEventListener('focus', () => {
+            if (pendingTask) simulateReturn();
+        });
+
+        // Trigger Auto-Complete
+        function simulateReturn() {
+            if(!pendingTask) return;
+            const pTask = pendingTask;
+            pendingTask = null; // Clear immediately
+
+            setTimeout(() => {
+                completeTask(pTask.id, pTask.element);
+            }, 1200); // 1.2s delay for realism
+        }
+
+        // Mark Task Complete & Animate
+        function completeTask(taskId, cardElement) {
+            if (completedTasks.includes(taskId)) return;
+
+            completedTasks.push(taskId);
+            
+            if (cardElement) {
+                cardElement.classList.add('completed');
+                cardElement.classList.add('pulse-animation');
+                
+                const btn = cardElement.querySelector('.btn');
+                if(btn) {
+                    btn.className = 'btn';
+                    btn.innerHTML = '✅ Completed';
+                    btn.disabled = true;
+                }
+                
+                const icon = cardElement.querySelector('.task-icon');
+                if(icon) icon.style.color = 'var(--success)';
+
+                generateConfetti(cardElement, 15);
+            }
+
+            showRandomToast();
+            updateProgress();
+        }
+
+        // Native Share & Fallback Clipboard
+        function triggerShare() {
+            const shareData = {
+                title: 'CBCE Task Unlock Portal',
+                text: 'Check out the CBCE Skill Development Portal!',
+                url: window.location.href
+            };
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied to clipboard!");
+            }
+        }
+
+        function shareSuccess() {
+            const text = "I just unlocked my resources on the CBCE Portal!";
+            if (navigator.share) {
+                navigator.share({ title: 'CBCE Success', text: text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied to clipboard!");
+            }
+        }
+
+        // Random Toast Notifications
+        function showRandomToast() {
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * SUCCESS_MESSAGES.length);
+            } while (idx === lastToastIndex && SUCCESS_MESSAGES.length > 1);
+            
+            lastToastIndex = idx;
+            showToast(SUCCESS_MESSAGES[idx]);
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--success)"></i> ${message}`;
+            container.appendChild(toast);
+            
+            void toast.offsetWidth; // Trigger reflow
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        // Modals
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Mini CSS Confetti Engine
+        function generateConfetti(container, amount) {
+            container.style.position = container.style.position || 'relative';
+            const colors = ['#FF9933', '#138808', '#FFD700', '#0A1F5C'];
+            
+            for(let i=0; i<amount; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti-piece';
+                conf.style.left = Math.random() * 100 + '%';
+                conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animation = `dropConfetti ${0.8 + Math.random()}s ease-in forwards`;
+                container.appendChild(conf);
+                
+                setTimeout(() => conf.remove(), 2000);
+            }
+        }
+
+        // Start App
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
