@@ -16,24 +16,6 @@
     <!-- LordIcon -->
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
-<script>
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        document.querySelectorAll(".task-icon-wrap").forEach(wrap => {
-            const icon = wrap.querySelector("lord-icon");
-
-            if (
-                !window.customElements.get("lord-icon") ||
-                !icon ||
-                icon.shadowRoot === null
-            ) {
-                wrap.classList.add("fallback-active");
-            }
-        });
-    }, 2500);
-});
-</script>
-
     <style>
         :root {
             /* Branding Colors */
@@ -422,23 +404,11 @@ window.addEventListener("load", () => {
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 8px 16px;
-            padding: 0 8px;
-        }
         .footer-links a {
             color: var(--saffron);
             font-weight: 600;
             text-decoration: none;
-            margin: 0;
-            min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            margin: 0 10px;
         }
         .footer-links a:hover { text-decoration: underline; }
 
@@ -462,61 +432,43 @@ window.addEventListener("load", () => {
         }
         .modal-content {
             background: var(--white);
-            padding: 26px 20px;
+            padding: 40px;
             border-radius: var(--border-radius);
             text-align: center;
             max-width: 400px;
-            width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
+            width: 90%;
             transform: scale(0.9);
             transition: var(--transition);
             position: relative;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-content h2 { font-family: var(--font-heading); color: var(--navy); margin: 16px 0 8px; font-size: 1.25rem; }
-        .modal-content p { color: #555; margin-bottom: 20px; font-size: 0.92rem; }
-        @media (min-width: 480px) {
-            .modal-content { padding: 40px; width: 90%; }
-            .modal-content h2 { margin: 20px 0 10px; font-size: 1.5rem; }
-            .modal-content p { margin-bottom: 25px; font-size: 1rem; }
-        }
+        .modal-content h2 { font-family: var(--font-heading); color: var(--navy); margin: 20px 0 10px; }
+        .modal-content p { color: #555; margin-bottom: 25px; }
 
         .toast-container {
             position: fixed;
             bottom: 80px; /* Above progress bar */
             right: 20px;
-            left: 20px;
             z-index: 1100;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
             gap: 10px;
-            pointer-events: none;
         }
         .toast {
             background: var(--white);
             border-left: 4px solid var(--success);
-            padding: 14px 18px;
+            padding: 16px 20px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 600;
-            font-size: 0.85rem;
             color: var(--navy);
-            max-width: 320px;
-            width: 100%;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: auto;
         }
         .toast.show { transform: translateX(0); }
-        @media (min-width: 480px) {
-            .toast-container { left: auto; }
-            .toast { font-size: 0.92rem; padding: 16px 20px; }
-        }
 
         /* Location Selection Modal */
         .location-modal-content {
@@ -532,10 +484,8 @@ window.addEventListener("load", () => {
         .branch-option {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px 14px;
-            padding: 14px;
-            min-height: 44px;
+            gap: 14px;
+            padding: 14px 16px;
             border-radius: var(--border-radius-sm);
             border: 2px solid var(--light-gray);
             background: var(--white);
@@ -544,9 +494,6 @@ window.addEventListener("load", () => {
             width: 100%;
             text-align: left;
             font-family: var(--font-body);
-        }
-        @media (min-width: 480px) {
-            .branch-option { flex-wrap: nowrap; padding: 14px 16px; }
         }
         .branch-option:hover:not(.locked) {
             border-color: var(--saffron);
@@ -645,20 +592,7 @@ window.addEventListener("load", () => {
         <div class="tricolor-border-top"></div>
         <div class="header-content">
             <div class="brand">
-                <div class="task-icon-wrap">
-
-<lord-icon
-src="https://cdn.lordicon.com/wxnxiano.json"
-trigger="hover"
-state="hover-jump"
-colors="primary:#0a1f5c,secondary:#ff9933"
-style="width:40px;height:40px">
-</lord-icon>
-
-<i class="fa-solid fa-graduation-cap task-icon-fallback"
-style="color:#0A1F5C"></i>
-
-</div>
+                <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="2000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:40px;height:40px"></lord-icon>
                 <div class="brand-text">
                     <h1>CBCE</h1>
                     <p>Skill Development</p>
@@ -673,20 +607,7 @@ style="color:#0A1F5C"></i>
     <!-- Main Public View -->
     <main>
         <section class="hero">
-            <div class="task-icon-wrap">
-
-<lord-icon
-src="https://cdn.lordicon.com/gqzfzudq.json"
-trigger="loop"
-delay="3000"
-colors="primary:#ff9933,secondary:#0a1f5c"
-style="width:80px;height:80px">
-</lord-icon>
-
-<i class="fa-solid fa-bullseye task-icon-fallback"
-style="font-size:4rem;color:#FF9933"></i>
-
-</div>
+            <lord-icon src="https://cdn.lordicon.com/gqzfzudq.json" trigger="loop" delay="1500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:80px;height:80px"></lord-icon>
             <h1 class="tricolor-text">Task Unlock Portal</h1>
             <p>Complete all tasks below to unlock your exclusive resources and certificate.</p>
             <div class="divider"></div>
@@ -723,20 +644,7 @@ style="font-size:4rem;color:#FF9933"></i>
     <!-- Modals -->
     <div class="modal-overlay" id="location-modal">
         <div class="modal-content location-modal-content">
-            <div class="task-icon-wrap">
-
-<lord-icon
-src="https://cdn.lordicon.com/wxnxiano.json"
-trigger="loop"
-delay="2500"
-colors="primary:#0a1f5c,secondary:#ff9933"
-style="width:70px;height:70px">
-</lord-icon>
-
-<i class="fa-solid fa-location-dot task-icon-fallback"
-style="font-size:4rem;color:#FF9933"></i>
-
-</div>
+            <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="1000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:70px;height:70px"></lord-icon>
             <h2>Select Your Branch</h2>
             <p style="margin-bottom: 10px;">Please choose your branch location to continue.</p>
             <div class="branch-list">
@@ -778,20 +686,7 @@ style="font-size:4rem;color:#FF9933"></i>
 
     <div class="modal-overlay" id="welcome-modal">
         <div class="modal-content">
-            <div class="task-icon-wrap">
-
-<lord-icon
-src="https://cdn.lordicon.com/lupuorrc.json"
-trigger="loop"
-delay="2500"
-colors="primary:#ff9933,secondary:#0a1f5c"
-style="width:100px;height:100px">
-</lord-icon>
-
-<i class="fa-solid fa-hand-sparkles task-icon-fallback"
-style="font-size:5rem;color:#FF9933"></i>
-
-</div>
+            <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" delay="500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:100px;height:100px"></lord-icon>
             <h2>Welcome to CBCE Portal!</h2>
             <p>Ready to unlock your potential? Complete the tasks in your dashboard to proceed.</p>
             <button class="btn btn-primary" onclick="closeModal('welcome-modal')">Let's Begin <i class="fa-solid fa-arrow-right"></i></button>
@@ -802,20 +697,7 @@ style="font-size:5rem;color:#FF9933"></i>
         <div class="modal-content">
             <div id="full-confetti" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
             <!-- Fixed congratulations animated trophy icon to guarantee loaded presentation -->
-            <div class="task-icon-wrap">
-
-<lord-icon
-src="https://cdn.lordicon.com/asyrguzg.json"
-trigger="loop"
-delay="3500"
-colors="primary:#FFD700,secondary:#138808"
-style="width:120px;height:120px">
-</lord-icon>
-
-<i class="fa-solid fa-trophy task-icon-fallback"
-style="font-size:6rem;color:#FFD700"></i>
-
-</div>
+            <lord-icon src="https://cdn.lordicon.com/asyrguzg.json" trigger="loop" delay="200" colors="primary:#ffd700,secondary:#138808" style="width:120px;height:120px"></lord-icon>
             <h2>Congratulations!</h2>
             <p>You have successfully completed all tasks.</p>
             <button class="btn btn-primary" onclick="shareSuccess()">Share Your Success <i class="fa-solid fa-share-nodes"></i></button>
@@ -838,10 +720,8 @@ style="font-size:6rem;color:#FFD700"></i>
         // - title: The main heading of the task card.
         // - desc: A short description explaining what the user needs to do.
         // - url: The link to open. (Note: use 'share' to trigger the device's native share menu).
-        // - icon: FontAwesome classes for the fallback icon (Find icons at fontawesome.com).
-        // - color: Hex color code for the fallback icon.
-        // - lordicon: Lordicon CDN URL for the animated icon shown on the card.
-        // - lordColors: "primary:HEX,secondary:HEX" color string matching the brand theme.
+        // - icon: FontAwesome classes for the icon (Find icons at fontawesome.com).
+        // - color: Hex color code for the icon.
         // ==========================================
         const TASKS = [
             { 
@@ -850,9 +730,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Rate and review us on Google to support our branch.', 
                 url: 'https://g.page/r/CRTzruHtUZkTEAE/review', 
                 icon: 'fa-brands fa-google', 
-                color: '#EA4335',
-                lordicon: 'https://cdn.lordicon.com/xyaycvbi.json',
-                lordColors: 'primary:#EA4335,secondary:#FBBC05'
+                color: '#EA4335' 
             },
             { 
                 id: 't2', 
@@ -860,9 +738,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Connect with our local Kumarghat Facebook account.', 
                 url: 'https://www.facebook.com/share/1MzwkXdVon/', 
                 icon: 'fa-brands fa-facebook', 
-                color: '#1877F2',
-                lordicon: 'https://cdn.lordicon.com/xdgxdwbp.json',
-                lordColors: 'primary:#1877F2,secondary:#1877F2'
+                color: '#1877F2' 
             },
             { 
                 id: 't3', 
@@ -870,9 +746,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Like and follow our official local Facebook page.', 
                 url: 'https://www.facebook.com/share/1FtqaiDqQr/', 
                 icon: 'fa-solid fa-thumbs-up', 
-                color: '#1877F2',
-                lordicon: 'https://cdn.lordicon.com/rgdyjcbr.json',
-                lordColors: 'primary:#1877F2,secondary:#1877F2'
+                color: '#1877F2' 
             },
             { 
                 id: 't4', 
@@ -880,9 +754,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Follow the main CBCE India Facebook page.', 
                 url: 'https://www.facebook.com/share/15oC2Qw6ne/', 
                 icon: 'fa-brands fa-facebook', 
-                color: '#1877F2',
-                lordicon: 'https://cdn.lordicon.com/xdgxdwbp.json',
-                lordColors: 'primary:#1877F2,secondary:#0A1F5C'
+                color: '#1877F2' 
             },
             { 
                 id: 't5', 
@@ -890,9 +762,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Follow our official Instagram for latest updates.', 
                 url: 'https://www.instagram.com/cbceindia?igsh=MTdzNnNmaWsxd3EwZQ==', 
                 icon: 'fa-brands fa-instagram', 
-                color: '#E1306C',
-                lordicon: 'https://cdn.lordicon.com/xbtsqhqk.json',
-                lordColors: 'primary:#E1306C,secondary:#833AB4'
+                color: '#E1306C' 
             },
             { 
                 id: 't6', 
@@ -900,9 +770,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Join our WhatsApp group for instant notifications.', 
                 url: 'https://chat.whatsapp.com/DFnzb9CjjNb5fMUDJ4NpOf', 
                 icon: 'fa-brands fa-whatsapp', 
-                color: '#25D366',
-                lordicon: 'https://cdn.lordicon.com/gpjxjbxb.json',
-                lordColors: 'primary:#25D366,secondary:#128C7E'
+                color: '#25D366' 
             },
             { 
                 id: 't7', 
@@ -910,9 +778,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Leave us a positive review on Justdial.', 
                 url: 'https://jsdl.in/DT-99EY2MYYU2A', 
                 icon: 'fa-solid fa-star', 
-                color: '#F36B21',
-                lordicon: 'https://cdn.lordicon.com/lznlxwtc.json',
-                lordColors: 'primary:#FFD700,secondary:#F36B21'
+                color: '#F36B21' 
             },
             { 
                 id: 't8', 
@@ -920,9 +786,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 desc: 'Share this page with your friends and network.', 
                 url: 'share', 
                 icon: 'fa-solid fa-share-nodes', 
-                color: '#FF9933',
-                lordicon: 'https://cdn.lordicon.com/hrjifpbq.json',
-                lordColors: 'primary:#FF9933,secondary:#0A1F5C'
+                color: '#FF9933' 
             }
         ];
 
@@ -975,13 +839,10 @@ style="font-size:6rem;color:#FFD700"></i>
                 
                 card.className = `task-card ${isCompleted ? 'completed' : ''}`;
                 card.dataset.id = task.id;
-
-                // Completed state swaps to the Success (checkmark) Lordicon; otherwise use the task's own brand icon
-                const iconSrc = isCompleted ? 'https://cdn.lordicon.com/lomfljuq.json' : task.lordicon;
-                const iconColors = isCompleted ? 'primary:#10B981,secondary:#10B981' : task.lordColors;
-                const iconTrigger = isCompleted ? 'in' : 'hover';
-                const fallbackIconClass = isCompleted ? 'fa-solid fa-circle-check' : task.icon;
-                const fallbackIconColor = isCompleted ? 'var(--success)' : task.color;
+                
+                // If completed, swap original brand icon to checkmark circle
+                const activeIconClass = isCompleted ? 'fa-solid fa-circle-check' : task.icon;
+                const activeIconColor = isCompleted ? 'var(--success)' : task.color;
 
                 card.innerHTML = `
                     <div class="card-header">
@@ -990,23 +851,7 @@ style="font-size:6rem;color:#FFD700"></i>
                             <h3>${task.title}</h3>
                             <p>${task.desc}</p>
                         </div>
-                        <div class="task-icon-wrap">
-
-    <lord-icon
-        class="task-icon"
-        data-src="${iconSrc}"
-        trigger="${iconTrigger}"
-        state="hover-jump"
-        delay="150"
-        colors="${iconColors}"
-        style="width:40px;height:40px">
-    </lord-icon>
-
-    <i class="${fallbackIconClass} task-icon-fallback"
-       style="color:${fallbackIconColor}">
-    </i>
-
-</div>
+                        <i class="${activeIconClass} task-icon" style="color: ${activeIconColor}"></i>
                     </div>
                     <button class="btn ${isCompleted ? '' : 'btn-primary'}" onclick="handleTaskAction('${task.id}', '${task.url}', this)" ${isCompleted ? 'disabled' : ''}>
                         ${isCompleted ? '✅ Completed' : 'Go & Complete <i class="fa-solid fa-arrow-right"></i>'}
@@ -1014,66 +859,7 @@ style="font-size:6rem;color:#FFD700"></i>
                 `;
 
                 grid.appendChild(card);
-
-                // If the Lordicon element fails to load its animation data, reveal the FontAwesome fallback instead
-                const lordEl = card.querySelector('lord-icon.task-icon');
-                const wrapEl = card.querySelector('.task-icon-wrap');
-               if (lordEl && wrapEl) {
-
-    const fallback = () => wrapEl.classList.add("fallback-active");
-
-    lordEl.addEventListener("error", fallback);
-
-    lordEl.addEventListener("load", () => {
-        wrapEl.classList.remove("fallback-active");
-    });
-
-    setTimeout(() => {
-
-        if (
-            !lordEl.hasAttribute("src") ||
-            lordEl.offsetWidth === 0 ||
-            lordEl.shadowRoot === null
-        ) {
-            fallback();
-        }
-
-    },2500);
-
-}
             });
-
-            // Lazy-init non-critical task Lordicons: only fetch/render each icon's animation
-            // once its card scrolls near the viewport, to keep initial load lightweight.
-            lazyLoadTaskIcons();
-        }
-
-        // Lazily assign the 'src' attribute on task Lordicons so their Lottie JSON
-        // only downloads once the card is about to enter the viewport (perf optimization).
-        function lazyLoadTaskIcons() {
-            const icons = document.querySelectorAll('#task-grid lord-icon.task-icon[data-src]');
-
-            if (!('IntersectionObserver' in window)) {
-                // Fallback for older browsers: just load them all immediately
-                icons.forEach(icon => {
-                    icon.setAttribute('src', icon.dataset.src);
-                    icon.removeAttribute('data-src');
-                });
-                return;
-            }
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const icon = entry.target;
-                        icon.setAttribute('src', icon.dataset.src);
-                        icon.removeAttribute('data-src');
-                        obs.unobserve(icon);
-                    }
-                });
-            }, { rootMargin: '200px 0px' });
-
-            icons.forEach(icon => observer.observe(icon));
         }
 
         // Update Progress Bar
@@ -1147,21 +933,11 @@ style="font-size:6rem;color:#FFD700"></i>
                     btn.disabled = true;
                 }
                 
-                // Swap task card icon directly to the animated Success checkmark upon dynamic completion
-                const wrap = cardElement.querySelector('.task-icon-wrap');
-                const icon = cardElement.querySelector('lord-icon.task-icon');
-                const fallbackIcon = cardElement.querySelector('.task-icon-fallback');
-                if (icon) {
-                    icon.removeAttribute('data-src');
-                    icon.setAttribute('src', 'https://cdn.lordicon.com/lomfljuq.json');
-                    icon.setAttribute('trigger', 'in');
-                    icon.setAttribute('colors', 'primary:#10B981,secondary:#10B981');
-                    if (wrap) wrap.classList.remove('fallback-active');
-                    if (typeof icon.load === 'function') icon.load();
-                }
-                if (fallbackIcon) {
-                    fallbackIcon.className = 'fa-solid fa-circle-check task-icon-fallback';
-                    fallbackIcon.style.color = 'var(--success)';
+                // Swap task card icon directly to checkmark circle upon dynamic completion
+                const icon = cardElement.querySelector('.task-icon');
+                if(icon) {
+                    icon.className = 'fa-solid fa-circle-check task-icon';
+                    icon.style.color = 'var(--success)';
                 }
 
                 generateConfetti(cardElement, 15);
