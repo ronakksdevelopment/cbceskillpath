@@ -344,24 +344,39 @@
             100% { transform: translateY(150px) rotate(360deg); opacity: 0; }
         }
 
-        /* Animated Trophy (Matches Welcome Icon Layout & Style Exactly) */
-        @keyframes bounceTrophy {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .trophy-container {
-            width: 100px;
-            height: 100px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto; 
-            animation: bounceTrophy 2s ease-in-out infinite;
-        }
-        .trophy-icon {
-            font-size: 4.5rem;
-            color: var(--saffron);
-        }
+/* Completion Popup - Match Welcome Popup */
+
+#completion-modal .modal-content lord-icon{
+    width:100px;
+    height:100px;
+    display:block;
+    margin:0 auto;
+}
+
+#completion-modal .modal-content h2{
+    margin:20px 0 12px;
+    font-family:var(--font-heading);
+    color:var(--navy);
+    font-size:2rem;
+    font-weight:700;
+    text-align:center;
+}
+
+#completion-modal .modal-content p{
+    color:#555;
+    text-align:center;
+    font-size:1.08rem;
+    line-height:1.7;
+    margin-bottom:28px;
+}
+
+#completion-modal .btn{
+    width:100%;
+}
+
+#completion-modal .btn + .btn{
+    margin-top:12px;
+}
         /* Progress Bar */
         .progress-container {
             position: fixed;
@@ -718,20 +733,40 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="completion-modal">
-        <div class="modal-content">
-           <div class="modal-content">
-            <div id="full-confetti" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
-            <!-- Perfectly Centered CSS Trophy -->
-            <div class="trophy-container">
-                <i class="fa-solid fa-trophy trophy-icon"></i>
-            </div>
-            <h2>Congratulations!</h2>
-            <p>You have successfully completed all tasks.</p>
-            <button class="btn btn-primary" onclick="shareSuccess()">Share Your Success <i class="fa-solid fa-share-nodes"></i></button>
-            <button class="btn" style="background: var(--light-gray); color: var(--navy); margin-top:10px;" onclick="closeModal('completion-modal')">Close</button>
-        </div>
+<div class="modal-overlay" id="completion-modal">
+    <div class="modal-content">
+
+        <div id="full-confetti"
+             style="position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit;"></div>
+
+        <lord-icon
+            src="https://cdn.lordicon.com/akuwjdzh.json"
+            trigger="loop"
+            delay="1200"
+            colors="primary:#ff9933,secondary:#0a1f5c"
+            style="width:100px;height:100px;margin:0 auto;display:block;">
+        </lord-icon>
+
+        <h2>Congratulations!</h2>
+
+        <p>
+            You have successfully completed all tasks.
+        </p>
+
+        <button class="btn btn-primary" onclick="shareSuccess()">
+            Share Your Success
+            <i class="fa-solid fa-share-nodes"></i>
+        </button>
+
+        <button
+            class="btn"
+            style="background:var(--light-gray);color:var(--navy);margin-top:12px;"
+            onclick="closeModal('completion-modal')">
+            Close
+        </button>
+
     </div>
+</div>
 
     <!-- Toast Container -->
     <div class="toast-container" id="toast-container"></div>
