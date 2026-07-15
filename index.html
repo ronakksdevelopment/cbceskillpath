@@ -44,14 +44,17 @@
 
         /* Base & Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; width: 100%; }
         body {
             font-family: var(--font-body);
             background-color: var(--cream);
             color: var(--dark-gray);
             overflow-x: hidden;
+            width: 100%;
             line-height: 1.6;
-            padding-bottom: 80px; /* Space for progress bar */
+            padding-bottom: 90px; /* Space for progress bar */
         }
+        img, svg, lord-icon { max-width: 100%; }
 
         /* Tricolor Utility */
         .tricolor-border-top {
@@ -94,85 +97,108 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 20px;
+            padding: 10px 16px;
             max-width: 1200px;
             margin: 0 auto;
+            gap: 10px;
         }
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             user-select: none;
+            min-width: 0;
         }
         .brand-text h1 {
             font-family: var(--font-brand);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--navy);
             line-height: 1.2;
         }
         .brand-text p {
-            font-size: 0.75rem;
+            font-size: 0.68rem;
             color: var(--saffron);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap;
         }
         .location-pill {
             background: var(--light-gray);
             color: var(--navy);
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        @media (min-width: 480px) {
+            .header-content { padding: 12px 20px; gap: 12px; }
+            .brand { gap: 12px; }
+            .brand-text h1 { font-size: 1.5rem; }
+            .brand-text p { font-size: 0.75rem; }
+            .location-pill { padding: 6px 12px; font-size: 0.8rem; gap: 6px; }
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 40px 20px 20px;
+            padding: 28px 16px 16px;
             max-width: 800px;
             margin: 0 auto;
         }
         .hero h1 {
             font-family: var(--font-heading);
-            font-size: 2.2rem;
-            margin: 15px 0 10px;
+            font-size: 1.6rem;
+            margin: 12px 0 8px;
+            line-height: 1.3;
         }
         .hero p {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: #555;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            padding: 0 4px;
         }
         .divider {
-            width: 100px;
+            width: 80px;
             height: 4px;
             background: linear-gradient(to right, var(--saffron), var(--navy), var(--green));
             margin: 0 auto;
             border-radius: 2px;
+        }
+        @media (min-width: 480px) {
+            .hero { padding: 40px 20px 20px; }
+            .hero h1 { font-size: 2.2rem; margin: 15px 0 10px; }
+            .hero p { font-size: 1.1rem; margin-bottom: 20px; padding: 0; }
+            .divider { width: 100px; }
         }
 
         /* Task Grid */
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 20px 16px;
+            width: 100%;
         }
         .task-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 16px;
+            align-items: stretch;
         }
-        @media (min-width: 768px) { .task-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 480px) { .main-container { padding: 24px 20px; } .task-grid { gap: 18px; } }
+        @media (min-width: 768px) { .main-container { padding: 30px 20px; } .task-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
         @media (min-width: 1024px) { .task-grid { grid-template-columns: repeat(3, 1fr); } }
 
         /* Task Card */
         .task-card {
             background: var(--white);
             border-radius: var(--border-radius);
-            padding: 24px;
+            padding: 18px;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
             position: relative;
@@ -180,6 +206,8 @@
             display: flex;
             flex-direction: column;
             border-left: 4px solid var(--saffron);
+            height: 100%;
+            min-height: 0;
         }
         .task-card:hover {
             transform: translateY(-4px);
@@ -193,49 +221,80 @@
         .card-header {
             display: flex;
             align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 14px;
         }
         .step-number {
             background: var(--light-gray);
             color: var(--navy);
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             flex-shrink: 0;
         }
         .task-card.completed .step-number {
             background: var(--success);
             color: var(--white);
         }
+        .card-content {
+            min-width: 0;
+            flex: 1;
+        }
         .card-content h3 {
             font-family: var(--font-heading);
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--navy);
             margin-bottom: 4px;
+            line-height: 1.3;
         }
         .card-content p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #666;
+            line-height: 1.5;
         }
-        .task-icon {
-            font-size: 2rem;
-            color: var(--navy);
+        .task-icon-wrap {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
             align-self: flex-start;
             margin-left: auto;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .task-icon-wrap lord-icon {
+            width: 40px;
+            height: 40px;
+        }
+        /* Fallback Font Awesome icon (shown only if Lordicon fails to load) */
+        .task-icon-fallback {
+            font-size: 1.9rem;
+            color: var(--navy);
+            display: none;
+        }
+        .task-icon-wrap.fallback-active lord-icon { display: none; }
+        .task-icon-wrap.fallback-active .task-icon-fallback { display: block; }
+        @media (min-width: 480px) {
+            .task-card { padding: 22px; }
+            .card-header { gap: 16px; margin-bottom: 16px; }
+            .step-number { width: 32px; height: 32px; font-size: 0.9rem; }
+            .card-content h3 { font-size: 1.1rem; }
+            .card-content p { font-size: 0.9rem; }
+            .task-icon-wrap, .task-icon-wrap lord-icon { width: 44px; height: 44px; }
         }
         .btn {
-            padding: 12px 20px;
+            padding: 13px 20px;
+            min-height: 44px;
             border-radius: var(--border-radius-sm);
             border: none;
             font-family: var(--font-heading);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -245,6 +304,7 @@
             justify-content: center;
             gap: 8px;
             margin-top: auto;
+            touch-action: manipulation;
         }
         .btn-primary {
             background: var(--navy);
@@ -292,25 +352,27 @@
             width: 100%;
             background: var(--navy);
             color: var(--white);
-            padding: 15px 20px;
+            padding: 12px 16px;
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 12px;
             box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
         }
         .progress-text {
             font-family: var(--font-heading);
             font-weight: 600;
             white-space: nowrap;
+            font-size: 0.8rem;
         }
         .progress-track {
             flex-grow: 1;
-            height: 12px;
+            height: 10px;
             background: rgba(255,255,255,0.2);
             border-radius: 6px;
             overflow: hidden;
+            min-width: 0;
         }
         .progress-fill {
             height: 100%;
@@ -318,6 +380,11 @@
             width: 0%;
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 6px;
+        }
+        @media (min-width: 480px) {
+            .progress-container { padding: 15px 20px; gap: 20px; }
+            .progress-text { font-size: 1rem; }
+            .progress-track { height: 12px; }
         }
 
         /* Footer */
@@ -337,11 +404,23 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px 16px;
+            padding: 0 8px;
+        }
         .footer-links a {
             color: var(--saffron);
             font-weight: 600;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .footer-links a:hover { text-decoration: underline; }
 
@@ -365,43 +444,61 @@
         }
         .modal-content {
             background: var(--white);
-            padding: 40px;
+            padding: 26px 20px;
             border-radius: var(--border-radius);
             text-align: center;
             max-width: 400px;
-            width: 90%;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
             transform: scale(0.9);
             transition: var(--transition);
             position: relative;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-content h2 { font-family: var(--font-heading); color: var(--navy); margin: 20px 0 10px; }
-        .modal-content p { color: #555; margin-bottom: 25px; }
+        .modal-content h2 { font-family: var(--font-heading); color: var(--navy); margin: 16px 0 8px; font-size: 1.25rem; }
+        .modal-content p { color: #555; margin-bottom: 20px; font-size: 0.92rem; }
+        @media (min-width: 480px) {
+            .modal-content { padding: 40px; width: 90%; }
+            .modal-content h2 { margin: 20px 0 10px; font-size: 1.5rem; }
+            .modal-content p { margin-bottom: 25px; font-size: 1rem; }
+        }
 
         .toast-container {
             position: fixed;
             bottom: 80px; /* Above progress bar */
             right: 20px;
+            left: 20px;
             z-index: 1100;
             display: flex;
             flex-direction: column;
+            align-items: flex-end;
             gap: 10px;
+            pointer-events: none;
         }
         .toast {
             background: var(--white);
             border-left: 4px solid var(--success);
-            padding: 16px 20px;
+            padding: 14px 18px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 600;
+            font-size: 0.85rem;
             color: var(--navy);
+            max-width: 320px;
+            width: 100%;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
         }
         .toast.show { transform: translateX(0); }
+        @media (min-width: 480px) {
+            .toast-container { left: auto; }
+            .toast { font-size: 0.92rem; padding: 16px 20px; }
+        }
 
         /* Location Selection Modal */
         .location-modal-content {
@@ -417,8 +514,10 @@
         .branch-option {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            padding: 14px;
+            min-height: 44px;
             border-radius: var(--border-radius-sm);
             border: 2px solid var(--light-gray);
             background: var(--white);
@@ -427,6 +526,9 @@
             width: 100%;
             text-align: left;
             font-family: var(--font-body);
+        }
+        @media (min-width: 480px) {
+            .branch-option { flex-wrap: nowrap; padding: 14px 16px; }
         }
         .branch-option:hover:not(.locked) {
             border-color: var(--saffron);
@@ -525,7 +627,7 @@
         <div class="tricolor-border-top"></div>
         <div class="header-content">
             <div class="brand">
-                <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="2000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:40px;height:40px"></lord-icon>
+                <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="hover" colors="primary:#0a1f5c,secondary:#ff9933" style="width:40px;height:40px"></lord-icon>
                 <div class="brand-text">
                     <h1>CBCE</h1>
                     <p>Skill Development</p>
@@ -540,7 +642,7 @@
     <!-- Main Public View -->
     <main>
         <section class="hero">
-            <lord-icon src="https://cdn.lordicon.com/gqzfzudq.json" trigger="loop" delay="1500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:80px;height:80px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/gqzfzudq.json" trigger="in" state="in-reveal" colors="primary:#ff9933,secondary:#0a1f5c" style="width:80px;height:80px"></lord-icon>
             <h1 class="tricolor-text">Task Unlock Portal</h1>
             <p>Complete all tasks below to unlock your exclusive resources and certificate.</p>
             <div class="divider"></div>
@@ -577,7 +679,7 @@
     <!-- Modals -->
     <div class="modal-overlay" id="location-modal">
         <div class="modal-content location-modal-content">
-            <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="1000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:70px;height:70px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="in" colors="primary:#0a1f5c,secondary:#ff9933" style="width:70px;height:70px"></lord-icon>
             <h2>Select Your Branch</h2>
             <p style="margin-bottom: 10px;">Please choose your branch location to continue.</p>
             <div class="branch-list">
@@ -619,7 +721,7 @@
 
     <div class="modal-overlay" id="welcome-modal">
         <div class="modal-content">
-            <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" delay="500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:100px;height:100px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="in" colors="primary:#ff9933,secondary:#0a1f5c" style="width:100px;height:100px"></lord-icon>
             <h2>Welcome to CBCE Portal!</h2>
             <p>Ready to unlock your potential? Complete the tasks in your dashboard to proceed.</p>
             <button class="btn btn-primary" onclick="closeModal('welcome-modal')">Let's Begin <i class="fa-solid fa-arrow-right"></i></button>
@@ -630,7 +732,7 @@
         <div class="modal-content">
             <div id="full-confetti" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
             <!-- Fixed congratulations animated trophy icon to guarantee loaded presentation -->
-            <lord-icon src="https://cdn.lordicon.com/asyrguzg.json" trigger="loop" delay="200" colors="primary:#ffd700,secondary:#138808" style="width:120px;height:120px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/asyrguzg.json" trigger="in" colors="primary:#ffd700,secondary:#138808" style="width:120px;height:120px"></lord-icon>
             <h2>Congratulations!</h2>
             <p>You have successfully completed all tasks.</p>
             <button class="btn btn-primary" onclick="shareSuccess()">Share Your Success <i class="fa-solid fa-share-nodes"></i></button>
@@ -653,8 +755,10 @@
         // - title: The main heading of the task card.
         // - desc: A short description explaining what the user needs to do.
         // - url: The link to open. (Note: use 'share' to trigger the device's native share menu).
-        // - icon: FontAwesome classes for the icon (Find icons at fontawesome.com).
-        // - color: Hex color code for the icon.
+        // - icon: FontAwesome classes for the fallback icon (Find icons at fontawesome.com).
+        // - color: Hex color code for the fallback icon.
+        // - lordicon: Lordicon CDN URL for the animated icon shown on the card.
+        // - lordColors: "primary:HEX,secondary:HEX" color string matching the brand theme.
         // ==========================================
         const TASKS = [
             { 
@@ -663,7 +767,9 @@
                 desc: 'Rate and review us on Google to support our branch.', 
                 url: 'https://g.page/r/CRTzruHtUZkTEAE/review', 
                 icon: 'fa-brands fa-google', 
-                color: '#EA4335' 
+                color: '#EA4335',
+                lordicon: 'https://cdn.lordicon.com/xyaycvbi.json',
+                lordColors: 'primary:#EA4335,secondary:#FBBC05'
             },
             { 
                 id: 't2', 
@@ -671,7 +777,9 @@
                 desc: 'Connect with our local Kumarghat Facebook account.', 
                 url: 'https://www.facebook.com/share/1MzwkXdVon/', 
                 icon: 'fa-brands fa-facebook', 
-                color: '#1877F2' 
+                color: '#1877F2',
+                lordicon: 'https://cdn.lordicon.com/xdgxdwbp.json',
+                lordColors: 'primary:#1877F2,secondary:#1877F2'
             },
             { 
                 id: 't3', 
@@ -679,7 +787,9 @@
                 desc: 'Like and follow our official local Facebook page.', 
                 url: 'https://www.facebook.com/share/1FtqaiDqQr/', 
                 icon: 'fa-solid fa-thumbs-up', 
-                color: '#1877F2' 
+                color: '#1877F2',
+                lordicon: 'https://cdn.lordicon.com/rgdyjcbr.json',
+                lordColors: 'primary:#1877F2,secondary:#1877F2'
             },
             { 
                 id: 't4', 
@@ -687,7 +797,9 @@
                 desc: 'Follow the main CBCE India Facebook page.', 
                 url: 'https://www.facebook.com/share/15oC2Qw6ne/', 
                 icon: 'fa-brands fa-facebook', 
-                color: '#1877F2' 
+                color: '#1877F2',
+                lordicon: 'https://cdn.lordicon.com/xdgxdwbp.json',
+                lordColors: 'primary:#1877F2,secondary:#0A1F5C'
             },
             { 
                 id: 't5', 
@@ -695,7 +807,9 @@
                 desc: 'Follow our official Instagram for latest updates.', 
                 url: 'https://www.instagram.com/cbceindia?igsh=MTdzNnNmaWsxd3EwZQ==', 
                 icon: 'fa-brands fa-instagram', 
-                color: '#E1306C' 
+                color: '#E1306C',
+                lordicon: 'https://cdn.lordicon.com/xbtsqhqk.json',
+                lordColors: 'primary:#E1306C,secondary:#833AB4'
             },
             { 
                 id: 't6', 
@@ -703,7 +817,9 @@
                 desc: 'Join our WhatsApp group for instant notifications.', 
                 url: 'https://chat.whatsapp.com/DFnzb9CjjNb5fMUDJ4NpOf', 
                 icon: 'fa-brands fa-whatsapp', 
-                color: '#25D366' 
+                color: '#25D366',
+                lordicon: 'https://cdn.lordicon.com/gpjxjbxb.json',
+                lordColors: 'primary:#25D366,secondary:#128C7E'
             },
             { 
                 id: 't7', 
@@ -711,7 +827,9 @@
                 desc: 'Leave us a positive review on Justdial.', 
                 url: 'https://jsdl.in/DT-99EY2MYYU2A', 
                 icon: 'fa-solid fa-star', 
-                color: '#F36B21' 
+                color: '#F36B21',
+                lordicon: 'https://cdn.lordicon.com/lznlxwtc.json',
+                lordColors: 'primary:#FFD700,secondary:#F36B21'
             },
             { 
                 id: 't8', 
@@ -719,7 +837,9 @@
                 desc: 'Share this page with your friends and network.', 
                 url: 'share', 
                 icon: 'fa-solid fa-share-nodes', 
-                color: '#FF9933' 
+                color: '#FF9933',
+                lordicon: 'https://cdn.lordicon.com/hrjifpbq.json',
+                lordColors: 'primary:#FF9933,secondary:#0A1F5C'
             }
         ];
 
@@ -772,10 +892,13 @@
                 
                 card.className = `task-card ${isCompleted ? 'completed' : ''}`;
                 card.dataset.id = task.id;
-                
-                // If completed, swap original brand icon to checkmark circle
-                const activeIconClass = isCompleted ? 'fa-solid fa-circle-check' : task.icon;
-                const activeIconColor = isCompleted ? 'var(--success)' : task.color;
+
+                // Completed state swaps to the Success (checkmark) Lordicon; otherwise use the task's own brand icon
+                const iconSrc = isCompleted ? 'https://cdn.lordicon.com/lomfljuq.json' : task.lordicon;
+                const iconColors = isCompleted ? 'primary:#10B981,secondary:#10B981' : task.lordColors;
+                const iconTrigger = isCompleted ? 'in' : 'hover';
+                const fallbackIconClass = isCompleted ? 'fa-solid fa-circle-check' : task.icon;
+                const fallbackIconColor = isCompleted ? 'var(--success)' : task.color;
 
                 card.innerHTML = `
                     <div class="card-header">
@@ -784,7 +907,10 @@
                             <h3>${task.title}</h3>
                             <p>${task.desc}</p>
                         </div>
-                        <i class="${activeIconClass} task-icon" style="color: ${activeIconColor}"></i>
+                        <div class="task-icon-wrap">
+                            <lord-icon class="task-icon" data-src="${iconSrc}" trigger="${iconTrigger}" colors="${iconColors}" style="width:40px;height:40px"></lord-icon>
+                            <i class="${fallbackIconClass} task-icon-fallback" style="color: ${fallbackIconColor}"></i>
+                        </div>
                     </div>
                     <button class="btn ${isCompleted ? '' : 'btn-primary'}" onclick="handleTaskAction('${task.id}', '${task.url}', this)" ${isCompleted ? 'disabled' : ''}>
                         ${isCompleted ? '✅ Completed' : 'Go & Complete <i class="fa-solid fa-arrow-right"></i>'}
@@ -792,7 +918,46 @@
                 `;
 
                 grid.appendChild(card);
+
+                // If the Lordicon element fails to load its animation data, reveal the FontAwesome fallback instead
+                const lordEl = card.querySelector('lord-icon.task-icon');
+                const wrapEl = card.querySelector('.task-icon-wrap');
+                if (lordEl && wrapEl) {
+                    lordEl.addEventListener('error', () => wrapEl.classList.add('fallback-active'));
+                }
             });
+
+            // Lazy-init non-critical task Lordicons: only fetch/render each icon's animation
+            // once its card scrolls near the viewport, to keep initial load lightweight.
+            lazyLoadTaskIcons();
+        }
+
+        // Lazily assign the 'src' attribute on task Lordicons so their Lottie JSON
+        // only downloads once the card is about to enter the viewport (perf optimization).
+        function lazyLoadTaskIcons() {
+            const icons = document.querySelectorAll('#task-grid lord-icon.task-icon[data-src]');
+
+            if (!('IntersectionObserver' in window)) {
+                // Fallback for older browsers: just load them all immediately
+                icons.forEach(icon => {
+                    icon.setAttribute('src', icon.dataset.src);
+                    icon.removeAttribute('data-src');
+                });
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const icon = entry.target;
+                        icon.setAttribute('src', icon.dataset.src);
+                        icon.removeAttribute('data-src');
+                        obs.unobserve(icon);
+                    }
+                });
+            }, { rootMargin: '200px 0px' });
+
+            icons.forEach(icon => observer.observe(icon));
         }
 
         // Update Progress Bar
@@ -866,11 +1031,21 @@
                     btn.disabled = true;
                 }
                 
-                // Swap task card icon directly to checkmark circle upon dynamic completion
-                const icon = cardElement.querySelector('.task-icon');
-                if(icon) {
-                    icon.className = 'fa-solid fa-circle-check task-icon';
-                    icon.style.color = 'var(--success)';
+                // Swap task card icon directly to the animated Success checkmark upon dynamic completion
+                const wrap = cardElement.querySelector('.task-icon-wrap');
+                const icon = cardElement.querySelector('lord-icon.task-icon');
+                const fallbackIcon = cardElement.querySelector('.task-icon-fallback');
+                if (icon) {
+                    icon.removeAttribute('data-src');
+                    icon.setAttribute('src', 'https://cdn.lordicon.com/lomfljuq.json');
+                    icon.setAttribute('trigger', 'in');
+                    icon.setAttribute('colors', 'primary:#10B981,secondary:#10B981');
+                    if (wrap) wrap.classList.remove('fallback-active');
+                    if (typeof icon.load === 'function') icon.load();
+                }
+                if (fallbackIcon) {
+                    fallbackIcon.className = 'fa-solid fa-circle-check task-icon-fallback';
+                    fallbackIcon.style.color = 'var(--success)';
                 }
 
                 generateConfetti(cardElement, 15);
