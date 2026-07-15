@@ -403,6 +403,98 @@
         }
         .toast.show { transform: translateX(0); }
 
+        /* Location Selection Modal */
+        .location-modal-content {
+            max-width: 440px;
+        }
+        .branch-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+            text-align: left;
+        }
+        .branch-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: var(--border-radius-sm);
+            border: 2px solid var(--light-gray);
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-body);
+        }
+        .branch-option:hover:not(.locked) {
+            border-color: var(--saffron);
+            background: #FFF8F0;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .branch-option.locked {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background: #F5F5F5;
+        }
+        .branch-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            background: var(--light-gray);
+            color: var(--navy);
+        }
+        .branch-option:not(.locked) .branch-icon {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+        }
+        .branch-info {
+            flex-grow: 1;
+        }
+        .branch-info .branch-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .branch-info .branch-status {
+            font-size: 0.78rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        .coming-soon-badge {
+            background: var(--light-gray);
+            color: #777;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+        .available-badge {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -466,7 +558,8 @@
                 <h3>CBCE Skill Development</h3>
                 <p>Connect · Learn · Grow</p>
                 <div class="footer-links">
-                    <a href="https://linktr.ee/cbceindia" target="_blank"><i class="fa-solid fa-link"></i> Linktree</a>
+                    <a href="https://ronakksdevelopment.github.io/cbceskillpath/" target="_blank"><i class="fa-solid fa-link"></i> Skill Path</a>
+                    <a href="https://ronakksdevelopment.github.io/cbceindia/" target="_blank"><i class="fa-solid fa-globe"></i> Main Website</a>
                 </div>
                 <p style="margin-top: 15px; font-size: 0.8rem; color: #999;">📍 Kumarghat, Tripura, India</p>
             </div>
@@ -482,6 +575,48 @@
     </div>
 
     <!-- Modals -->
+    <div class="modal-overlay" id="location-modal">
+        <div class="modal-content location-modal-content">
+            <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" delay="1000" colors="primary:#0a1f5c,secondary:#ff9933" style="width:70px;height:70px"></lord-icon>
+            <h2>Select Your Branch</h2>
+            <p style="margin-bottom: 10px;">Please choose your branch location to continue.</p>
+            <div class="branch-list">
+                <button type="button" class="branch-option" onclick="selectBranch('Kumarghat')">
+                    <div class="branch-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="branch-info">
+                        <div class="branch-name">Kumarghat</div>
+                        <div class="branch-status">Ready to get started</div>
+                    </div>
+                    <span class="available-badge">✅ Available</span>
+                </button>
+                <button type="button" class="branch-option locked" disabled aria-disabled="true">
+                    <div class="branch-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="branch-info">
+                        <div class="branch-name">Fatikroy</div>
+                        <div class="branch-status">Not yet available</div>
+                    </div>
+                    <span class="coming-soon-badge">🔒 Coming Soon</span>
+                </button>
+                <button type="button" class="branch-option locked" disabled aria-disabled="true">
+                    <div class="branch-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="branch-info">
+                        <div class="branch-name">Kailashahar</div>
+                        <div class="branch-status">Not yet available</div>
+                    </div>
+                    <span class="coming-soon-badge">🔒 Coming Soon</span>
+                </button>
+                <button type="button" class="branch-option locked" disabled aria-disabled="true">
+                    <div class="branch-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="branch-info">
+                        <div class="branch-name">Silchar</div>
+                        <div class="branch-status">Not yet available</div>
+                    </div>
+                    <span class="coming-soon-badge">🔒 Coming Soon</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="welcome-modal">
         <div class="modal-content">
             <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" delay="500" colors="primary:#ff9933,secondary:#0a1f5c" style="width:100px;height:100px"></lord-icon>
@@ -532,7 +667,7 @@
             },
             { 
                 id: 't2', 
-                title: 'Facebook Kumarghat Account', 
+                title: 'Facebook Account Kumarghat', 
                 desc: 'Connect with our local Kumarghat Facebook account.', 
                 url: 'https://www.facebook.com/share/1MzwkXdVon/', 
                 icon: 'fa-brands fa-facebook', 
@@ -540,7 +675,7 @@
             },
             { 
                 id: 't3', 
-                title: 'Facebook Kumarghat Page', 
+                title: 'Facebook Page Kumarghat', 
                 desc: 'Like and follow our official local Facebook page.', 
                 url: 'https://www.facebook.com/share/1FtqaiDqQr/', 
                 icon: 'fa-solid fa-thumbs-up', 
@@ -608,11 +743,21 @@
             renderTasks();
             updateProgress();
 
+            // Show branch/location selection modal first
+            setTimeout(() => {
+                openModal('location-modal');
+            }, 300);
+        }
+
+        // Handle Branch Selection (only unlocked branches are clickable)
+        function selectBranch(branchName) {
+            closeModal('location-modal');
+
             if (!welcomeShown) {
                 setTimeout(() => {
                     openModal('welcome-modal');
                     welcomeShown = true;
-                }, 800);
+                }, 500);
             }
         }
 
